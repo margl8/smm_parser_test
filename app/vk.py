@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 from app import utility as ut
-import datetime
 import time
 
 
@@ -10,7 +9,7 @@ class Group:
     group_id: int
     screen_name: str
     name: str
-    members_count: int | str
+    members_count: [int, str]
     members: list
 
     def __init__(self, group_id: int):
@@ -75,7 +74,8 @@ class Wall:
     owner_id: int
     posts: list
 
-    def __init__(self, owner_id: Group | int):
+    def __init__(self, owner_id):
+        owner_id: [Group, int]
         if type(owner_id) is Group:
             self.owner_id = Group.__getattribute__(owner_id, Group.group_id)
         self.owner_id = owner_id
@@ -91,7 +91,8 @@ class Wall:
     def __repr__(self):
         pass
 
-    def get_posts_by_amount(self: Group | int, count: int = 20, offset: int = 0):
+    def get_posts_by_amount(self, count: int = 20, offset: int = 0):
+
         posts = []
         while count != len(posts):
             posts = ut.vk_send_request('wall.get', {'owner_id': -self.owner_id,
