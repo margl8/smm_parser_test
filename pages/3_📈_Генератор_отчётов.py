@@ -5,15 +5,13 @@ import app
 from io import BytesIO
 import xlsxwriter
 
-
-
 today = dt.date.today()
 first_day = dt.datetime(today.year, today.month, 1)
 min_date = dt.datetime(today.year - 1, today.month, 1)
 
 with st.sidebar:
     link = st.text_input("Введите ссылку на сообщество", max_chars=70,
-                         placeholder='https://domain.com/example')
+                         placeholder='https://vk.com/example')
     period = st.date_input(label='Выберите период',
                            value=[first_day, today],
                            min_value=min_date,
@@ -30,7 +28,7 @@ else:
     wall = app.Wall(id)
     wall.get_posts_by_date(period)
 
-    tuple = app.vk_formalize(wall.posts, wall.owner_id)
+    tuple = app.vk_formalize(wall.posts)
     df = pd.DataFrame(tuple)
 
 
@@ -39,6 +37,8 @@ else:
     Отчёт по постам собщества **{group.name}** за период: **{period[0]}** с по **{period[1]}**
     '''
     st.success(success_text, icon="✅")
+
+    period
 
     buffer = BytesIO()
     with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:

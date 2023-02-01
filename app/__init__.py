@@ -1,2 +1,2 @@
-from app.vk import Group, Wall
+from app.vk import *
 from app.utility import *

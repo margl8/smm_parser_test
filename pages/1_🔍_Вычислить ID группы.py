@@ -14,4 +14,3 @@ if link:
     st.write(f'Название: {group.name}')
     st.write(f'Короткий адрес: {group.screen_name}')
     st.write(f'Количество подписчиков: {group.members_count}')
-
